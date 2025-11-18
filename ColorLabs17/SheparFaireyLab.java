@@ -2,8 +2,8 @@
 /**
  * Write a description of class SheparFaireyLab here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Sneha Kunnanath 
+ * 11/17/25
  */
 import java.awt.*;
 import java.util.*;
@@ -130,12 +130,12 @@ public class SheparFaireyLab
             spot.setBlue(average);
             spot.setGreen(average);
             }
-         Color p1 = new Color(222,182,133);
-         Color p2 = new Color(10,10,10);
-         Color p3 = new Color(144,93,93);
-         Color p4 = new Color(255,183,197);
-         Color p5 = new Color(255,190,152);
-         Color p6 = new Color(255,92,157);
+         Color p1 = new Color(130,20,90);
+         Color p2 = new Color(200,90,180);
+         Color p3 = new Color(220,150,200);
+         Color p4 = new Color(235,180,215);
+         Color p5 = new Color(240,200,225);
+         Color p6 = new Color(250,240,245);
          for (Pixel spot:pixels3){
              if(spot.getRed()<sc1){
                  spot.setColor(p1);}
