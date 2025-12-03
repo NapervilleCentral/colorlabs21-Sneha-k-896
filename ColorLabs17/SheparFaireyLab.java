@@ -1,6 +1,6 @@
 
 /**
- * Write a description of class SheparFaireyLab here.
+ * Makes a colored picture
  * 
  * Sneha Kunnanath 
  * 11/17/25
@@ -23,7 +23,6 @@ public class SheparFaireyLab
          
          //relative path
          Picture apic = new Picture("images\\sneha.jpg");
-         //Picture apic = new Picture("images\beach.jpg");
          //change with selfie picture
          Picture me = new Picture("images/sneha.jpg");
          Picture me1 = new Picture("images/sneha.jpg");
@@ -45,7 +44,7 @@ public class SheparFaireyLab
           * method 1 change
           * Makes everything greyscale and roughly divides sections and colors
           */
-         for (Pixel spot: pixels1){
+         for (Pixel spot: pixels1){ //sets to grayscale
             int average = (spot.getRed() + spot.getBlue() + spot.getGreen())/3;
             spot.setRed(average);
             spot.setBlue(average);
@@ -68,11 +67,11 @@ public class SheparFaireyLab
             }
             }
          me.explore();
-         
+         me2.write("images/SFtry1.jpg");
          Pixel pixels2[];
          pixels2 = me1.getPixels();
          // method 2 change - makes grayscale and makes 4 sections based off of highest and lowest rbg values
-         for(Pixel spot:pixels2){
+         for(Pixel spot:pixels2){ // sets to grayscale
             int average = (spot.getRed() + spot.getBlue()+spot.getGreen())/3;
             spot.setRed(average);
             spot.setBlue(average);
@@ -115,8 +114,8 @@ public class SheparFaireyLab
             }
             }
             me1.explore();
-         
-         //method 3
+            me2.write("images/SFtry2.jpg");
+         //method 3 - converts to grayscale and uses new colors based off of sectioning
          Pixel pixels3[];
          pixels3 = me2.getPixels();
          int sc1 = 255/6;
@@ -130,13 +129,14 @@ public class SheparFaireyLab
             spot.setBlue(average);
             spot.setGreen(average);
             }
+         //new color palette - light pink colors
          Color p1 = new Color(130,20,90);
          Color p2 = new Color(200,90,180);
          Color p3 = new Color(220,150,200);
          Color p4 = new Color(235,180,215);
          Color p5 = new Color(240,200,225);
          Color p6 = new Color(250,240,245);
-         for (Pixel spot:pixels3){
+         for (Pixel spot:pixels3){ // sets to color for each section based on where it is
              if(spot.getRed()<sc1){
                  spot.setColor(p1);}
              else if (spot.getRed()>=sc1 && spot.getRed()<sc2){
@@ -155,6 +155,7 @@ public class SheparFaireyLab
                 spot.setColor(p6);
                 }
             }
+         //implements these colors and makes a new picture and stores it.
          me2.explore();
          me2.write("images/SFtryfinal.jpg");
     }//main       
