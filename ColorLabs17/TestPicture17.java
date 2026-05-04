@@ -10,7 +10,8 @@ import java.util.*;
 import java.util.List; // resolves problem with java.awt.List and java.util.List
 public class TestPicture17
 {
-
+    Picture apic = new Picture("images\\seaTurtle.jpg");
+     Picture acanvas = new Picture("images\\canvas.jpg");
     /**
      * main method, to test the picture
      *
@@ -28,34 +29,42 @@ public class TestPicture17
      
      //Know it, Love it, Live it ON TEST----------------------
      //relative path                dir/folder/file
-     Picture apic = new Picture("images\\beach.jpg");
+     
+     //Picture apic = new Picture("images\\seaTurtle.jpg");
+     Picture acanvas = new Picture("images\\canvas.jpg");
+     
+     Picture apic1 = new Picture("images\\temple.jpg");
+     
      Picture ferris1 = new Picture("images/2000 ferris wheel2.jpg");
      Picture moto = new Picture("images/redMotorcycle.jpg");
      Picture ferris3 = new Picture("images/2000 ferris wheel2.jpg");
 
+     //mirrorVertical(apic);
      //apic.explore(); //DISPLAYS THE PICTURE ------------------------
-     ferris1.explore();
-     moto.explore();
+     copytoCanvas(apic1,acanvas);
+     acanvas.explore();
+     //ferris1.explore();
+     //moto.explore();
      
      //makes an array of pixels ----have to do for every picture
-     Pixel[] pixels;
+     //Pixel[] pixels;
      //gets pixels from picture and assigns to pixels array
-     pixels = ferris1.getPixels();
+    // pixels = ferris1.getPixels();
      
      Pixel[] mpixels;
      mpixels = moto.getPixels();
    
      //how many pixels or how large array ------- not tested on arrays
-    System.out.println("This is a large array"+pixels.length  );
+    //System.out.println("This is a large array"+pixels.length  );
 
 
     /**/
         //access each index
-    System.out.println(pixels[17]);
+    //System.out.println(pixels[17]);
     //access each pixel
    
     //setting colors with pixel documentation
-    Pixel spot = ferris1.getPixel(100,100);
+    /*Pixel spot = ferris1.getPixel(100,100);
     Pixel spot2 = ferris1.getPixel(433,283);
     Pixel ferr17 = pixels[17];
    
@@ -95,7 +104,7 @@ public class TestPicture17
         red = (int)(red*.25);
         spot1.setRed(red);
     }
-    moto.explore();
+    //moto.explore();
     for (Pixel spot1 : mpixels) {
         blue = spot1.getBlue();
         blue = (int)(blue*Math.random());
@@ -106,7 +115,7 @@ public class TestPicture17
         spot1.setGreen(green);
     }
    
-    moto.explore();
+    //moto.explore();
    
  /**/
 
@@ -154,8 +163,61 @@ final double  FACTOR = .5;
 
   /**/
     //write/save a picture as a file
-    ferris1.write("images/ferris11.jpg");
+    //ferris1.write("images/ferris11.jpg");
 
     /**/
   }//main
-}//class
+  /**
+   * Method to mirror on a vertical line in the middle of the picture
+   * based on the width
+   */
+  public static void mirrorVertical(Picture source){
+        int width = source.getWidth();
+        int mirrorPoint = width/2;
+        Pixel leftPixel = null;
+        Pixel rightPixel = null;
+        
+        //loop through all the rows 
+        for(int y = 0; y<source.getHeight();y++){
+            // loop from 0 to the middle (mirror point)
+            for(int x = 0; x<mirrorPoint;x++){
+                leftPixel = source.getPixel(x,y);
+                rightPixel = source.getPixel(width -1-x,y);
+                rightPixel.setColor(leftPixel.getColor());
+            }
+        }
+        
+      
+    }//mirrorVertical
+    
+    public void mirrorTemple(Picture source){
+        int width = source.getWidth();
+        int mirrorPoint = width/2;
+        for(int y = 0; y<source.getHeight();y++){
+            
+        }
+        
+        
+    }
+    
+    
+  /**
+   * copy one picture to another picture/canvas
+   * add two ints to params to place you want picture on the target
+   */
+  public static void copytoCanvas(Picture source,Picture target){
+        Pixel sourcePix = null;
+        Pixel targetPix = null;
+        
+        //loop through columns (targetX is the starting point on the canvas)
+        for(int sourceX =0,targetX = 0; sourceX<source.getWidth();sourceX++,targetX++){
+            //loops throug the rows
+            for(int sourceY =0,targetY = 0; sourceY<source.getHeight();sourceY++,targetY++){
+                sourcePix = source.getPixel(sourceX,sourceY);
+                targetPix = target.getPixel(targetX,targetY);
+                targetPix.setColor(sourcePix.getColor());
+        }
+    }
+}
+//class
+}
