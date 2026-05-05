@@ -42,6 +42,7 @@ public class TestPicture17
      //mirrorVertical(apic);
      //apic.explore(); //DISPLAYS THE PICTURE ------------------------
      copytoCanvas(apic1,acanvas);
+      mirrorTemple(apic1);
      acanvas.explore();
      //ferris1.explore();
      //moto.explore();
@@ -192,9 +193,18 @@ final double  FACTOR = .5;
     
     public void mirrorTemple(Picture source){
         int width = source.getWidth();
+        int height = source.getHeight();
         int mirrorPoint = width/2;
-        for(int y = 0; y<source.getHeight();y++){
-            
+        Pixel leftPixel, rightPixel;
+        for(int y = 0;y<height/4;y++){
+            for (int x = 0; x<mirrorPoint; x++){
+                leftPixel = source.getPixel(x,y);
+                int reflectedX = mirrorPoint + (mirrorPoint-x);
+                if(reflectedX<width){
+                    rightPixel = source.getPixel(reflectedX,y);
+                    rightPixel.setColor(leftPixel.getColor());
+                }
+            }
         }
         
         
