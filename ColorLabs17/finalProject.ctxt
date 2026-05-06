@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=finalProject
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\r\n\ main\ method,\ to\ test\ the\ picture\r\n\r\n
+comment2.params=source
+comment2.target=void\ mirrorHorizontal(Picture)
+comment3.params=factor\ source
+comment3.target=Picture\ scale(double,\ Picture)
+comment4.params=source
+comment4.target=void\ mirrorVertical(Picture)
+comment4.text=\r\n\ Method\ to\ mirror\ on\ a\ vertical\ line\ in\ the\ middle\ of\ the\ picture\r\n\ based\ on\ the\ width\r\n
+comment5.params=source
+comment5.target=void\ mirrorTemple(Picture)
+comment6.params=source\ target
+comment6.target=void\ copytoCanvas(Picture,\ Picture)
+comment6.text=\r\n\ copy\ one\ picture\ to\ another\ picture/canvas\r\n\ add\ two\ ints\ to\ params\ to\ place\ you\ want\ picture\ on\ the\ target\r\n
+numComments=7
