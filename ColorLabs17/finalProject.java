@@ -18,14 +18,24 @@ public class finalProject
   {
      
      Picture apic = new Picture("images\\seaTurtle.jpg");
+     Picture gray = new Picture("images\\seaTurtle.jpg");
      Picture acanvas = new Picture("images\\canvas.jpg");
      Picture small = scale(0.5,apic);
-     small.explore();
-     mirrorHorizontal(apic);
-     apic.explore(); //DISPLAYS THE PICTURE ------------------------
-     //mirrorTemple(apic1);
-     copytoCanvas(apic,acanvas);
-     //apic1.explore();
+     
+     //Picture recurse = recursiveImage(apic,acanvas,0,400,0.5);
+     Picture gray2 = grayScale(apic);
+     Picture endDetect = edgeDetection(gray);
+     Picture newSmall2 = scale(0.5,endDetect);
+     Picture newSmall = scale(0.5,gray2);
+    //mirrorHorizontal(apic);
+     //apic.explore(); 
+
+     copytoCanvas(small,acanvas,0,0);
+     copytoCanvas(newSmall,acanvas,500,0);
+     copytoCanvas(newSmall2,acanvas,1000,0);
+     acanvas.explore();
+    
+    
 
   }//main
   
@@ -41,9 +51,9 @@ public class finalProject
                 bottomPixel.setColor(topPixel.getColor());
             }
         }
-    
     }//original
     
+   //makes it smaller
     public static Picture scale(double factor,Picture source){
         int newW = (int)(source.getWidth()*factor);
         int newH = (int)(source.getHeight()*factor);
@@ -59,7 +69,7 @@ public class finalProject
         }
         return result;
     }
-  
+    
   /**
    * Method to mirror on a vertical line in the middle of the picture
    * based on the width
@@ -82,42 +92,77 @@ public class finalProject
         
       
     }//mirrorVertical
-    
-    public static void mirrorTemple(Picture source){
-        int width = source.getWidth();
-        int height = source.getHeight();
-        int mirrorPoint = width/2;
-        Pixel leftPixel, rightPixel;
-        for(int y = 0;y<height/4;y++){
-            for (int x = 0; x<mirrorPoint; x++){
-                leftPixel = source.getPixel(x,y);
-                int reflectedX = mirrorPoint + (mirrorPoint-x);
-                if(reflectedX<width){
-                    rightPixel = source.getPixel(reflectedX,y);
-                    rightPixel.setColor(leftPixel.getColor());
-                }
+
+    public static Picture grayScale(Picture source){
+        Pixel p;
+        int r,g,b,average;
+        for(int y=0; y<source.getHeight();y++){
+            for(int x=0;x<source.getWidth();x++){
+                p=source.getPixel(x,y);
+                average=(int)(p.getRed() + p.getGreen() + p.getBlue())/3;
+                
+                p.setRed(average);
+                p.setGreen(average);
+                p.setBlue(average);
             }
         }
-        
+        return source;
+    }
+    
+    //uses edge detection
+    public static Picture edgeDetection(Picture source){
+        Pixel leftPixel, rightPixel;
+        Color rightColor;
+        int colorDistance;
+        for(int y = 0; y<source.getHeight();y++){
+            for(int x = 0; x<source.getWidth()-1; x++){
+                leftPixel = source.getPixel(x,y);
+                rightPixel = source.getPixel(x+1,y);
+                rightColor = rightPixel.getColor();
+                int differnce = Math.abs(leftPixel.getRed()-rightPixel.getRed())+
+                Math.abs(leftPixel.getGreen()-rightPixel.getGreen())+Math.abs(leftPixel.getBlue()-rightPixel.getBlue());
+                if(differnce>20){
+                    leftPixel.setColor(Color.BLACK);
+                }
+                else{
+                    leftPixel.setColor(Color.WHITE);
+                }
+    
+            }
+        }
+        return source;
+    }
+    
+    public static void recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
+        if(source.getWidth()<source.getHeight()){
+            return;
+        }
+        copytoCanvas(source,canvas,x,y);
+        Picture smaller = scale(factor,source);
+        recursiveImage(smaller,canvas,x+50,y+50,factor);
         
     }
+    
+    
     
     
   /**
    * copy one picture to another picture/canvas
    * add two ints to params to place you want picture on the target
    */
-  public static void copytoCanvas(Picture source,Picture target){
-        Pixel sourcePix = null;
-        Pixel targetPix = null;
+  public static void copytoCanvas(Picture source, Picture target, int startX, int startY){
+        Pixel sourcePix, targetPix;
         
         //loop through columns (targetX is the starting point on the canvas)
-        for(int sourceX =0,targetX = 0; sourceX<source.getWidth();sourceX++,targetX++){
-            //loops throug the rows
-            for(int sourceY =0,targetY = 0; sourceY<source.getHeight();sourceY++,targetY++){
-                sourcePix = source.getPixel(sourceX,sourceY);
-                targetPix = target.getPixel(targetX,targetY);
-                targetPix.setColor(sourcePix.getColor());
+        for(int sourceX =0; sourceX<source.getWidth();sourceX++){
+            for(int sourceY =0; sourceY<source.getHeight();sourceY++){
+                
+                if(sourceX+startX<target.getWidth() && sourceY+startY<target.getHeight()){
+                    sourcePix = source.getPixel(sourceX,sourceY);
+                    targetPix = target.getPixel(sourceX+startX, sourceY+startY);
+                    targetPix.setColor(sourcePix.getColor());
+                    
+                }
         }
     }
 }
