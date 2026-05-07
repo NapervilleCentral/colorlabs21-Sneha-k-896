@@ -17,15 +17,18 @@ public class finalProject
   public static void main(String[] args)
   {
      
-     Picture apic = new Picture("images\\seaTurtle.jpg");
+     Picture original = new Picture("images\\seaTurtle.jpg");
      Picture acanvas = new Picture("images\\canvas.jpg");
-     Picture small = scale(0.5,apic);
-     small.explore();
+     
+    Picture small = scale(0.5,apic);
      mirrorHorizontal(apic);
-     apic.explore(); //DISPLAYS THE PICTURE ------------------------
-     //mirrorTemple(apic1);
-     copytoCanvas(apic,acanvas);
-     //apic1.explore();
+     apic.explore(); 
+     
+     canvas.copytoCanvas(apic,acanvas,0,0);
+     canvas.copytoCanvas(small,acanvas,0,0);
+     canvas.explore();
+    
+    
 
   }//main
   
@@ -107,17 +110,19 @@ public class finalProject
    * copy one picture to another picture/canvas
    * add two ints to params to place you want picture on the target
    */
-  public static void copytoCanvas(Picture source,Picture target){
-        Pixel sourcePix = null;
-        Pixel targetPix = null;
+  public static void copytoCanvas(Picture source, Picture target, int startX, int startY){
+        Pixel sourcePix, targetPix;
         
         //loop through columns (targetX is the starting point on the canvas)
-        for(int sourceX =0,targetX = 0; sourceX<source.getWidth();sourceX++,targetX++){
-            //loops throug the rows
-            for(int sourceY =0,targetY = 0; sourceY<source.getHeight();sourceY++,targetY++){
-                sourcePix = source.getPixel(sourceX,sourceY);
-                targetPix = target.getPixel(targetX,targetY);
-                targetPix.setColor(sourcePix.getColor());
+        for(int sourceX =0; sourceX<source.getWidth();sourceX++){
+            for(int sourceY =0; sourceY<source.getHeight();sourceY++){
+                
+                if(x+startX<target.getWidth() && y+startY<target.getHeight()){
+                    srcPix = source.getPixel(x,y);
+                    tgtPix = target.getPixel(x,+startX, y+startY);
+                    tgtPix.setColor(srcPix.getColor());
+                    
+                }
         }
     }
 }
