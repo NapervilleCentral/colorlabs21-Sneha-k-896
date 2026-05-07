@@ -17,16 +17,19 @@ public class finalProject
   public static void main(String[] args)
   {
      
-     Picture original = new Picture("images\\seaTurtle.jpg");
+     Picture apic = new Picture("images\\seaTurtle.jpg");
+     Picture gray = new Picture("images\\seaTurtle.jpg");
      Picture acanvas = new Picture("images\\canvas.jpg");
+     Picture small = scale(0.5,apic);
      
-    Picture small = scale(0.5,apic);
-     mirrorHorizontal(apic);
+    mirrorHorizontal(apic);
      apic.explore(); 
-     
-     canvas.copytoCanvas(apic,acanvas,0,0);
-     canvas.copytoCanvas(small,acanvas,0,0);
-     canvas.explore();
+
+      
+     //copytoCanvas(apic,acanvas,0,0);
+     copytoCanvas(small,acanvas,0,0);
+     copytoCanvas(gray,acanvas,300,0);
+     acanvas.explore();
     
     
 
@@ -44,9 +47,9 @@ public class finalProject
                 bottomPixel.setColor(topPixel.getColor());
             }
         }
-    
     }//original
     
+   //makes it smaller
     public static Picture scale(double factor,Picture source){
         int newW = (int)(source.getWidth()*factor);
         int newH = (int)(source.getHeight()*factor);
@@ -85,6 +88,24 @@ public class finalProject
         
       
     }//mirrorVertical
+
+    public static void grayScale(Picture source){
+        Pixel p;
+        int r, g,b,avg;
+        for(int y=0; y<source.getHeight();y++){
+            for(intx=0;x<source.getWidth();x++){
+                p=source.getPixel(x,y);
+                r=p.getRed();
+                g=p.getGreen();
+                b=p.getBlue();
+                avg = (r+g+b)/3;
+                p.setRed(avg);
+                p.setGreen(avg);
+                 p.setBlue(avg);
+            }
+        }
+        
+    }
     
     public static void mirrorTemple(Picture source){
         int width = source.getWidth();
