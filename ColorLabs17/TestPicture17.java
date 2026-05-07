@@ -41,8 +41,9 @@ public class TestPicture17
 
      //mirrorVertical(apic);
      //apic.explore(); //DISPLAYS THE PICTURE ------------------------
+     mirrorTemple(apic1);
      copytoCanvas(apic1,acanvas);
-     acanvas.explore();
+     apic1.explore();
      //ferris1.explore();
      //moto.explore();
      
@@ -173,16 +174,16 @@ final double  FACTOR = .5;
    */
   public static void mirrorVertical(Picture source){
         int width = source.getWidth();
-        int mirrorPoint = width/2;
+        int mirrorPoint = 276;
         Pixel leftPixel = null;
         Pixel rightPixel = null;
         
         //loop through all the rows 
-        for(int y = 0; y<source.getHeight();y++){
+        for(int y = 27; y<97;y++){
             // loop from 0 to the middle (mirror point)
-            for(int x = 0; x<mirrorPoint;x++){
+            for(int x = 13; x<mirrorPoint;x++){
                 leftPixel = source.getPixel(x,y);
-                rightPixel = source.getPixel(width -1-x,y);
+                rightPixel = source.getPixel(mirrorPoint+(mirrorPoint-x),y);
                 rightPixel.setColor(leftPixel.getColor());
             }
         }
@@ -190,11 +191,20 @@ final double  FACTOR = .5;
       
     }//mirrorVertical
     
-    public void mirrorTemple(Picture source){
+    public static void mirrorTemple(Picture source){
         int width = source.getWidth();
+        int height = source.getHeight();
         int mirrorPoint = width/2;
-        for(int y = 0; y<source.getHeight();y++){
-            
+        Pixel leftPixel, rightPixel;
+        for(int y = 0;y<height/4;y++){
+            for (int x = 0; x<mirrorPoint; x++){
+                leftPixel = source.getPixel(x,y);
+                int reflectedX = mirrorPoint + (mirrorPoint-x);
+                if(reflectedX<width){
+                    rightPixel = source.getPixel(reflectedX,y);
+                    rightPixel.setColor(leftPixel.getColor());
+                }
+            }
         }
         
         
