@@ -74,23 +74,24 @@ public class finalProject
    * Method to mirror on a vertical line in the middle of the picture
    * based on the width
    */
-  public static void mirrorVertical(Picture source){
+  public static void mirrorVertical(Picture source){ 
         int width = source.getWidth();
+        int mirrorPoint = width/2;
+        Pixel leftPixel, rightPixel;
+      /*
         int mirrorPoint = 276;
         Pixel leftPixel = null;
-        Pixel rightPixel = null;
+        Pixel rightPixel = null;*/
         
         //loop through all the rows 
-        for(int y = 27; y<97;y++){
+        for(int y = 0; y<source.getHeight();y++){
             // loop from 0 to the middle (mirror point)
-            for(int x = 13; x<mirrorPoint;x++){
+            for(int x = 0; x<mirrorPoint;x++){
                 leftPixel = source.getPixel(x,y);
-                rightPixel = source.getPixel(mirrorPoint+(mirrorPoint-x),y);
+                rightPixel = source.getPixel(width-1-x,y);
                 rightPixel.setColor(leftPixel.getColor());
             }
-        }
-        
-      
+        }             
     }//mirrorVertical
 
     public static Picture grayScale(Picture source){
