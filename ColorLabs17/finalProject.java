@@ -17,22 +17,32 @@ public class finalProject
   public static void main(String[] args)
   {
      
-     Picture apic = new Picture("images\\seaTurtle.jpg");
-     Picture gray = new Picture("images\\seaTurtle.jpg");
+     Picture apic = new Picture("images\\seaTurtle.jpg");//original
      Picture acanvas = new Picture("images\\canvas.jpg");
+     Picture apic2 = new Picture("images\\seaTurtle.jpg");//gray
      Picture small = scale(0.5,apic);
      
-     //Picture recurse = recursiveImage(apic,acanvas,0,400,0.5);
-     Picture gray2 = grayScale(apic);
-     Picture endDetect = edgeDetection(gray);
-     Picture newSmall2 = scale(0.5,endDetect);
-     Picture newSmall = scale(0.5,gray2);
-    //mirrorHorizontal(apic);
-     //apic.explore(); 
+     Picture gray = new Picture("images\\seaTurtle.jpg");//edgedetection
+     Picture turtle = new Picture("images\\seaTurtle.jpg");//vertical
+     
+     Picture recurse = new Picture("images\\seaTurtle.jpg");//edgedetection
+
+     
+     Picture recurseI = recursiveImage(recurse,acanvas,0,0,0.5);
+     Picture gray2 = grayScale(apic2); //makes gray
+     Picture vertical = mirrorVertical(turtle);//makes vertical
+     Picture endDetect = edgeDetection(gray);//edge detection
+     
+     Picture newSmall4 = scale(0.5,recurseI); //recurse pic 
+     Picture newSmall3 = scale(0.5,vertical); //vertical pic 
+     Picture newSmall2 = scale(0.5,endDetect);//endetect
+     Picture newSmall = scale(0.5,gray2); //makes pic gray
 
      copytoCanvas(small,acanvas,0,0);
      copytoCanvas(newSmall,acanvas,500,0);
      copytoCanvas(newSmall2,acanvas,1000,0);
+     copytoCanvas(newSmall3,acanvas,1000,661);
+     //copytoCanvas(newSmall4,acanvas,500,661);
      acanvas.explore();
     
     
@@ -74,7 +84,7 @@ public class finalProject
    * Method to mirror on a vertical line in the middle of the picture
    * based on the width
    */
-  public static void mirrorVertical(Picture source){ 
+  public static Picture mirrorVertical(Picture source){ 
         int width = source.getWidth();
         int mirrorPoint = width/2;
         Pixel leftPixel, rightPixel;
@@ -91,7 +101,8 @@ public class finalProject
                 rightPixel = source.getPixel(width-1-x,y);
                 rightPixel.setColor(leftPixel.getColor());
             }
-        }             
+        } 
+        return source;
     }//mirrorVertical
 
     public static Picture grayScale(Picture source){
@@ -134,14 +145,14 @@ public class finalProject
         return source;
     }
     
-    public static void recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
+    public static Picture recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
         if(source.getWidth()<source.getHeight()){
-            return;
+            return canvas;
         }
         copytoCanvas(source,canvas,x,y);
         Picture smaller = scale(factor,source);
         recursiveImage(smaller,canvas,x+50,y+50,factor);
-        
+        return source;
     }
     
     
