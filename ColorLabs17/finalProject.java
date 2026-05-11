@@ -22,13 +22,17 @@ public class finalProject
      Picture acanvas = new Picture("images\\canvas.jpg");
      Picture small = scale(0.5,apic);
      
-     Picture gray2 = grayScale(gray);
+     //Picture recurse = recursiveImage(apic,acanvas,0,400,0.5);
+     Picture gray2 = grayScale(apic);
+     Picture endDetect = edgeDetection(gray);
+     Picture newSmall2 = scale(0.5,endDetect);
      Picture newSmall = scale(0.5,gray2);
     //mirrorHorizontal(apic);
      //apic.explore(); 
 
      copytoCanvas(small,acanvas,0,0);
      copytoCanvas(newSmall,acanvas,500,0);
+     copytoCanvas(newSmall2,acanvas,1000,0);
      acanvas.explore();
     
     
@@ -70,26 +74,27 @@ public class finalProject
    * Method to mirror on a vertical line in the middle of the picture
    * based on the width
    */
-  public static void mirrorVertical(Picture source){
+  public static void mirrorVertical(Picture source){ 
         int width = source.getWidth();
+        int mirrorPoint = width/2;
+        Pixel leftPixel, rightPixel;
+      /*
         int mirrorPoint = 276;
         Pixel leftPixel = null;
-        Pixel rightPixel = null;
+        Pixel rightPixel = null;*/
         
         //loop through all the rows 
-        for(int y = 27; y<97;y++){
+        for(int y = 0; y<source.getHeight();y++){
             // loop from 0 to the middle (mirror point)
-            for(int x = 13; x<mirrorPoint;x++){
+            for(int x = 0; x<mirrorPoint;x++){
                 leftPixel = source.getPixel(x,y);
-                rightPixel = source.getPixel(mirrorPoint+(mirrorPoint-x),y);
+                rightPixel = source.getPixel(width-1-x,y);
                 rightPixel.setColor(leftPixel.getColor());
             }
-        }
-        
-      
+        }             
     }//mirrorVertical
 
-    public static void grayScale(Picture source){
+    public static Picture grayScale(Picture source){
         Pixel p;
         int r,g,b,average;
         for(int y=0; y<source.getHeight();y++){
@@ -102,20 +107,45 @@ public class finalProject
                 p.setBlue(average);
             }
         }
+        return source;
     }
+    
+   
     
     //uses edge detection
-    public static void edgeDetection(Picture source){
+    public static Picture edgeDetection(Picture source){
         Pixel leftPixel, rightPixel;
-        
+        Color rightColor;
+        int colorDistance;
         for(int y = 0; y<source.getHeight();y++){
-            for(int x = 0; x<source.getWidth(); x++){
-                
-            
+            for(int x = 0; x<source.getWidth()-1; x++){
+                leftPixel = source.getPixel(x,y);
+                rightPixel = source.getPixel(x+1,y);
+                rightColor = rightPixel.getColor();
+                int differnce = Math.abs(leftPixel.getRed()-rightPixel.getRed())+
+                Math.abs(leftPixel.getGreen()-rightPixel.getGreen())+Math.abs(leftPixel.getBlue()-rightPixel.getBlue());
+                if(differnce>20){
+                    leftPixel.setColor(Color.BLACK);
+                }
+                else{
+                    leftPixel.setColor(Color.WHITE);
+                }
+    
             }
         }
-    
+        return source;
     }
+    
+    public static void recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
+        if(source.getWidth()<source.getHeight()){
+            return;
+        }
+        copytoCanvas(source,canvas,x,y);
+        Picture smaller = scale(factor,source);
+        recursiveImage(smaller,canvas,x+50,y+50,factor);
+        
+    }
+    
     
     
     
