@@ -25,7 +25,7 @@ public class finalProject
      Picture gray = new Picture("images\\seaTurtle.jpg");//edgedetection
      Picture turtle = new Picture("images\\seaTurtle.jpg");//vertical
      
-     Picture recurse = new Picture("images\\seaTurtle.jpg");//edgedetection
+     Picture recurse = new Picture("images\\seaTurtle.jpg");//recursion
 
      
      Picture recurseI = recursiveImage(recurse,acanvas,0,0,0.5);
@@ -42,7 +42,7 @@ public class finalProject
      copytoCanvas(newSmall,acanvas,500,0);
      copytoCanvas(newSmall2,acanvas,1000,0);
      copytoCanvas(newSmall3,acanvas,1000,661);
-     //copytoCanvas(newSmall4,acanvas,500,661);
+     copytoCanvas(newSmall4,acanvas,500,661);
      acanvas.explore();
     
     
@@ -146,7 +146,7 @@ public class finalProject
     }
     
     public static Picture recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
-        if(source.getWidth()<source.getHeight()){
+        if(source.getWidth()<5 || <source.getHeight()<5){
             return canvas;
         }
         copytoCanvas(source,canvas,x,y);
