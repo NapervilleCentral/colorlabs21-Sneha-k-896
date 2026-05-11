@@ -14,7 +14,7 @@ public class finalProject
      * main method, to test the picture
      *
      */
-  public static void main(String[] args)
+ public static void main(String[] args)
   {
      
      Picture apic = new Picture("images\\seaTurtle.jpg");//original
@@ -41,6 +41,7 @@ public class finalProject
      Picture newSmall = scale(0.5,gray2); //makes pic gray
      Picture newsmall5 = scale(0.5,sepia2);
      
+     recursiveImage(recurse,acanvas,0,0,0.5);
      copytoCanvas(newsmall5,acanvas,0,660);
      copytoCanvas(small,acanvas,0,0);
      copytoCanvas(newSmall,acanvas,500,0);
@@ -49,10 +50,11 @@ public class finalProject
      //copytoCanvas(newSmall4,acanvas,500,661);
      acanvas.explore();
     
+     acanvas.write("images\\finalcanvas.jpg");
     
 
   }//main
-  
+
   public static void mirrorHorizontal(Picture source){
         int height = source.getHeight();
         int mirrorPoint = height/2;
@@ -150,13 +152,16 @@ public class finalProject
     }
     
     public static Picture recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
-        if(source.getWidth()<source.getHeight()){
+        if(source.getWidth()<10|| source.getHeight()<10){
             return canvas;
         }
+        /*if(x>=canvas.getWidth()|| y>=canvas.getHeight()){
+            return canvas;
+        }*/
         copytoCanvas(source,canvas,x,y);
         Picture smaller = scale(factor,source);
-        recursiveImage(smaller,canvas,x+50,y+50,factor);
-        return source;
+        recursiveImage(smaller,canvas,x+source.getWidth()/2,y+source.getHeight()/2,factor);
+        return canvas;
     }
     
     public static Picture sepia(Picture source){
