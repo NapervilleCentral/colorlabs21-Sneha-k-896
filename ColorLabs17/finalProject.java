@@ -22,12 +22,14 @@ public class finalProject
      Picture apic2 = new Picture("images\\seaTurtle.jpg");//gray
      Picture small = scale(0.5,apic);
      
+     Picture sepia = new Picture("images\\seaTurtle.jpg");//gray
+
      Picture gray = new Picture("images\\seaTurtle.jpg");//edgedetection
      Picture turtle = new Picture("images\\seaTurtle.jpg");//vertical
      
      Picture recurse = new Picture("images\\seaTurtle.jpg");//edgedetection
 
-     
+     Picture sepia2 = sepia(sepia);
      Picture recurseI = recursiveImage(recurse,acanvas,0,0,0.5);
      Picture gray2 = grayScale(apic2); //makes gray
      Picture vertical = mirrorVertical(turtle);//makes vertical
@@ -37,11 +39,13 @@ public class finalProject
      Picture newSmall3 = scale(0.5,vertical); //vertical pic 
      Picture newSmall2 = scale(0.5,endDetect);//endetect
      Picture newSmall = scale(0.5,gray2); //makes pic gray
-
+     Picture newsmall5 = scale(0.5,sepia2);
+     
+     copytoCanvas(newsmall5,acanvas,0,660);
      copytoCanvas(small,acanvas,0,0);
      copytoCanvas(newSmall,acanvas,500,0);
      copytoCanvas(newSmall2,acanvas,1000,0);
-     copytoCanvas(newSmall3,acanvas,1000,661);
+     copytoCanvas(newSmall3,acanvas,1000,660);
      //copytoCanvas(newSmall4,acanvas,500,661);
      acanvas.explore();
     
@@ -155,6 +159,26 @@ public class finalProject
         return source;
     }
     
+    public static Picture sepia(Picture source){
+        for(int y = 0; y<source.getHeight();y++){
+            for(int x = 0; x<source.getWidth();x++){
+                Pixel p = source.getPixel(x,y);
+                int r = p.getRed();
+                int g = p.getGreen();
+                int b = p.getBlue();
+                int newR = (int) (0.393*r + 0.769*g+0.189*b);
+                int newG = (int) (0.349*r + 0.686*g+0.168*b);
+                int newB = (int) (0.272*r + 0.534*g+0.131*b);
+
+                p.setRed(Math.min(255,newR));
+                p.setGreen(Math.min(255,newG));
+                p.setBlue(Math.min(255,newB));
+
+            }
+        }
+        return source;
+    }
+    
     
     
     
@@ -178,5 +202,6 @@ public class finalProject
         }
     }
 }
+
 //class
 }
