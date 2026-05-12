@@ -1,5 +1,5 @@
 /**
- * Sneha Kunnanath
+ * Kevin Hayes
  * Test Picture Classes
  *
  * @author (Kevin Hayes)
@@ -11,43 +11,56 @@ import java.util.List; // resolves problem with java.awt.List and java.util.List
 public class finalProject
 {
     /**
-     * main method, to test the picture
-     *
+     * main method, to implement methods and test the picture
      */
-  public static void main(String[] args)
+ public static void main(String[] args)
   {
      
      Picture apic = new Picture("images\\seaTurtle.jpg");//original
      Picture acanvas = new Picture("images\\canvas.jpg");
      Picture apic2 = new Picture("images\\seaTurtle.jpg");//gray
+     Picture small = scale(0.5,apic);
      
+     Picture sepia = new Picture("images\\seaTurtle.jpg");//gray
      Picture gray = new Picture("images\\seaTurtle.jpg");//edgedetection
      Picture turtle = new Picture("images\\seaTurtle.jpg");//vertical
-     
-     Picture recurse = new Picture("images\\seaTurtle.jpg");//recursion
+     Picture recurse = new Picture("images\\seaTurtle.jpg");//edgedetection
 
-     
+     /*
+      * Calls the method assinged for each picture
+      */
+     Picture sepia2 = sepia(sepia);
      Picture recurseI = recursiveImage(recurse,acanvas,0,0,0.5);
      Picture gray2 = grayScale(apic2); //makes gray
      Picture vertical = mirrorVertical(turtle);//makes vertical
      Picture endDetect = edgeDetection(gray);//edge detection
      
-     Picture small = scale(0.5,apic);
+     /*
+      * Scales each picture
+      */
      Picture newSmall4 = scale(0.5,recurseI); //recurse pic 
      Picture newSmall3 = scale(0.5,vertical); //vertical pic 
      Picture newSmall2 = scale(0.5,endDetect);//endetect
      Picture newSmall = scale(0.5,gray2); //makes pic gray
-
+     Picture newsmall5 = scale(0.5,sepia2);
+     
+     /*
+      * Calls each picture and puts each one on the canvas
+      */
+     
+     recursiveImage(recurse,acanvas,0,0,0.5);
+     copytoCanvas(newsmall5,acanvas,0,660);
      copytoCanvas(small,acanvas,0,0);
      copytoCanvas(newSmall,acanvas,500,0);
-     copytoCanvas(newSmall2,acanvas,1000,0);
-     copytoCanvas(newSmall3,acanvas,1000,661);
-     copytoCanvas(newSmall4,acanvas,500,661);
+     copytoCanvas(newSmall2,acanvas,1000,660);//end detect
+     copytoCanvas(newSmall3,acanvas,1000,0);//vertical
      acanvas.explore();
     
+     acanvas.write("images\\finalcanvas.jpg");
     
+
   }//main
-  
+
   public static void mirrorHorizontal(Picture source){
         int height = source.getHeight();
         int mirrorPoint = height/2;
@@ -120,8 +133,6 @@ public class finalProject
         return source;
     }
     
-   
-    
     //uses edge detection
     public static Picture edgeDetection(Picture source){
         Pixel leftPixel, rightPixel;
@@ -132,9 +143,9 @@ public class finalProject
                 leftPixel = source.getPixel(x,y);
                 rightPixel = source.getPixel(x+1,y);
                 rightColor = rightPixel.getColor();
-                int differnce = Math.abs(leftPixel.getRed()-rightPixel.getRed())+
+                int difference = Math.abs(leftPixel.getRed()-rightPixel.getRed())+
                 Math.abs(leftPixel.getGreen()-rightPixel.getGreen())+Math.abs(leftPixel.getBlue()-rightPixel.getBlue());
-                if(differnce>20){
+                if(difference>20){
                     leftPixel.setColor(Color.BLACK);
                 }
                 else{
@@ -146,14 +157,33 @@ public class finalProject
         return source;
     }
     
-    
     public static Picture recursiveImage(Picture source,Picture canvas, int x, int y, double factor){
-        if(source.getWidth()<5 ||source.getHeight()<5){
+        if(source.getWidth()<10|| source.getHeight()<10){
             return canvas;
         }
         copytoCanvas(source,canvas,x,y);
         Picture smaller = scale(factor,source);
-        recursiveImage(smaller,canvas,x+50,y+50,factor);
+        recursiveImage(smaller,canvas,x+source.getWidth()/2,y+source.getHeight()/2,factor);
+        return canvas;
+    }
+    
+    public static Picture sepia(Picture source){
+        for(int y = 0; y<source.getHeight();y++){
+            for(int x = 0; x<source.getWidth();x++){
+                Pixel p = source.getPixel(x,y);
+                int r = p.getRed();
+                int g = p.getGreen();
+                int b = p.getBlue();
+                int newR = (int) (0.393*r + 0.769*g+0.189*b);
+                int newG = (int) (0.349*r + 0.686*g+0.168*b);
+                int newB = (int) (0.272*r + 0.534*g+0.131*b);
+
+                p.setRed(Math.min(255,newR));
+                p.setGreen(Math.min(255,newG));
+                p.setBlue(Math.min(255,newB));
+
+            }
+        }
         return source;
     }
     
@@ -180,5 +210,6 @@ public class finalProject
         }
     }
 }
+
 //class
 }
