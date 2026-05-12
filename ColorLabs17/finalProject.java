@@ -1,5 +1,5 @@
 /**
- * Kevin Hayes
+ * Sneha Kunnanath
  * Test Picture Classes
  *
  * @author (Kevin Hayes)
@@ -20,7 +20,6 @@ public class finalProject
      Picture apic = new Picture("images\\seaTurtle.jpg");//original
      Picture acanvas = new Picture("images\\canvas.jpg");
      Picture apic2 = new Picture("images\\seaTurtle.jpg");//gray
-     Picture small = scale(0.5,apic);
      
      Picture gray = new Picture("images\\seaTurtle.jpg");//edgedetection
      Picture turtle = new Picture("images\\seaTurtle.jpg");//vertical
@@ -33,6 +32,7 @@ public class finalProject
      Picture vertical = mirrorVertical(turtle);//makes vertical
      Picture endDetect = edgeDetection(gray);//edge detection
      
+     Picture small = scale(0.5,apic);
      Picture newSmall4 = scale(0.5,recurseI); //recurse pic 
      Picture newSmall3 = scale(0.5,vertical); //vertical pic 
      Picture newSmall2 = scale(0.5,endDetect);//endetect
@@ -46,7 +46,6 @@ public class finalProject
      acanvas.explore();
     
     
-
   }//main
   
   public static void mirrorHorizontal(Picture source){
