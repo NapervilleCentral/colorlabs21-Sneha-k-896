@@ -2,7 +2,7 @@
 comment0.target=finalProject
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
-comment1.text=\r\n\ main\ method,\ to\ implement\ methods\ and\ test\ the\ picture\r\n\r\n
+comment1.text=\r\n\ main\ method,\ to\ implement\ methods\ and\ test\ the\ picture\r\n
 comment2.params=source
 comment2.target=void\ mirrorHorizontal(Picture)
 comment3.params=factor\ source

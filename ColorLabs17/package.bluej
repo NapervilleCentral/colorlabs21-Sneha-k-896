@@ -11,27 +11,18 @@ dependency3.type=UsesDependency
 dependency4.from=finalProject
 dependency4.to=Pixel
 dependency4.type=UsesDependency
-<<<<<<< HEAD
-editor.fx.0.height=739
-editor.fx.0.width=816
-editor.fx.0.x=892
-editor.fx.0.y=181
+editor.fx.0.height=0
+editor.fx.0.width=0
+editor.fx.0.x=0
+editor.fx.0.y=0
 objectbench.height=78
 objectbench.width=843
-=======
-editor.fx.0.height=578
-editor.fx.0.width=573
-editor.fx.0.x=856
-editor.fx.0.y=156
-objectbench.height=77
-objectbench.width=844
->>>>>>> a3aa26eada939fc1598170fd93015bad4e9394c1
 package.divider.horizontal=0.6
-package.divider.vertical=0.8474212034383954
-package.editor.height=467
-package.editor.width=756
-package.editor.x=522
-package.editor.y=82
+package.divider.vertical=0.8476702508960573
+package.editor.height=466
+package.editor.width=753
+package.editor.x=958
+package.editor.y=224
 package.frame.height=658
 package.frame.width=883
 package.numDependencies=4
